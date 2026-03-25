@@ -2,8 +2,6 @@ package com.capgemini.taskmanagementsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.capgemini.taskmanagementsystem.entity.User;
-import com.capgemini.taskmanagementsystem.entity.Task;
 
 import java.time.LocalDateTime;
 
