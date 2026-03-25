@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ProjectID")
     private Integer projectId;

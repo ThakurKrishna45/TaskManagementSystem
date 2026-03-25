@@ -1,14 +1,14 @@
 package com.capgemini.taskmanagementsystem.entity;
 
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @Table(name="user")
+@NoArgsConstructor @AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,13 +27,6 @@ public class User {
     @Column(name="FullName")
     private String fullName;
 
-    public User(){};
 
-    public User(Integer userId, @NonNull String username, @NonNull String password, @NonNull String email, @NonNull String fullName) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.fullName = fullName;
-    }
+
 }
