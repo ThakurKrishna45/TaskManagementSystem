@@ -1,3 +1,14 @@
 spring:
   application:
     name: taskmanagementsystem
+  datasource:
+    url: jdbc:mysql://10.10.180.108:3306/taskmanagement
+    username: hello
+    password: 12345
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # MOVE THIS INSIDE 'spring'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
