@@ -27,6 +27,4 @@ public class User {
     @Column(name="FullName")
     private String fullName;
 
-
-
 }
