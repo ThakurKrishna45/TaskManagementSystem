@@ -16,7 +16,7 @@ public class NotificationNotFoundException extends RuntimeException{
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "Resource Not Found",
-                ex.getMessage()
+                ""
         );
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
