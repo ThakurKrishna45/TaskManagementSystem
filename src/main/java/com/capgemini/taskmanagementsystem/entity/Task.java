@@ -12,18 +12,23 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer TaskID;
+    @Column(name = "TaskID")
+    private Integer taskID;
 
-    @Column(nullable = false)
-    private String TaskName;
+    @Column(nullable = false, name = "TaskName")
+    private String taskName;
 
     @Lob
-    private String Description;
+    @Column(name = "Description")
+    private String description;
+    @Column(name = "DueDate")
+    private LocalDate dueDate;
 
-    private LocalDate DueDate;
+    @Column(name = "Priority")
+    private String priority;
 
-    private String Priority;
-    private String Status;
+    @Column(name = "Status")
+    private String status;
 
 
     @ManyToOne
