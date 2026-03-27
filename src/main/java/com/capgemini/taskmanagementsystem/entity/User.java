@@ -4,6 +4,11 @@ package com.capgemini.taskmanagementsystem.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -26,7 +31,17 @@ public class User {
     @NonNull
     @Column(name="FullName")
     private String fullName;
+    @OneToMany(mappedBy = "user")
+    private List<Project> projects = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<>();
 
-
+    @ManyToMany
+    @JoinTable(
+            name = "UserRoles",
+            joinColumns = @JoinColumn(name = "UserID"),
+            inverseJoinColumns = @JoinColumn(name = "UserRoleID")
+    )
+    private Set<UserRole> roles = new HashSet<>();
 }
