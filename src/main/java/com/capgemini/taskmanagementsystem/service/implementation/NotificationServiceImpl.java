@@ -2,7 +2,8 @@ package com.capgemini.taskmanagementsystem.service.implementation;
 
 import com.capgemini.taskmanagementsystem.dto.ErrorResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Notification;
-import com.capgemini.taskmanagementsystem.exception.notification.NotificationNotFoundException;
+import com.capgemini.taskmanagementsystem.exception.MissingFieldException;
+import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.repository.INotificationRepository;
 import com.capgemini.taskmanagementsystem.service.INotificationService;
 import org.aspectj.weaver.ast.Not;
@@ -30,7 +31,7 @@ public class NotificationServiceImpl implements INotificationService {
         return notificationRepository.save(notification);
     }
 
-    public Notification updateNotification(Notification notification) {
+    public Notification updateNotification(Notification notification) throws MissingFieldException {
         if (notificationRepository.existsById(notification.getNotificationID())) {
             return notificationRepository.save(notification);
         }
@@ -39,7 +40,7 @@ public class NotificationServiceImpl implements INotificationService {
         throw new MissingFieldException("Notification not found , unable to update");
     }
 
-    public void deleteNotification(Notification notification) {
+    public void deleteNotification(Notification notification) throws MissingFieldException {
         if (notificationRepository.existsById(notification.getNotificationID())) {
             notificationRepository.deleteById(notification.getNotificationID());
         }
@@ -55,7 +56,7 @@ public class NotificationServiceImpl implements INotificationService {
             return notification.get();
         }
 
-        throw ResourceNotFoundException("Notification not found with id: " + id);
+        throw new ResourceNotFoundException("Notification not found with id: " + id);
 
     }
 
@@ -63,7 +64,7 @@ public class NotificationServiceImpl implements INotificationService {
     public List<Notification> getAllNotificationsOfADate(LocalDateTime date) {
         List<Notification> notifications = notificationRepository.findAllNotificationsByCreatedAt(date);
         if(notifications==null) {
-            throw ResourceNotFoundException("No notifications found for the given date: " + date);
+            throw new ResourceNotFoundException("No notifications found for the given date: " + date);
         }
 
         return notifications;
@@ -73,7 +74,7 @@ public class NotificationServiceImpl implements INotificationService {
     public List<Notification> getAllNotificationsOfAProject(Integer id) {
         List<Notification> notifications = notificationRepository.getAllNotificationsOfAProject(id);
         if(notifications==null) {
-            throw ResourceNotFoundException("No notifications found for the given project id: " + id );
+            throw new ResourceNotFoundException("No notifications found for the given project id: " + id );
         }
 
         return notifications;
@@ -83,7 +84,7 @@ public class NotificationServiceImpl implements INotificationService {
     public List<Notification> getAllNotificationsBetweenARange(LocalDateTime start, LocalDateTime end) {
         List<Notification> notifications = notificationRepository.findAllNotificationsBetweenDates(start,end);
         if(notifications==null) {
-            throw ResourceNotFoundException("No notifications found for the given project between this date range");
+            throw new ResourceNotFoundException("No notifications found for the given project between this date range");
         }
 
         return notifications;
@@ -93,7 +94,7 @@ public class NotificationServiceImpl implements INotificationService {
     public List<Notification> getallNotificationsOfAUser(Integer id) {
         List<Notification> notifications = notificationRepository.findAllNotificationsByUserID(id);
          if(notifications==null) {
-            throw ResourceNotFoundException("No notifications found for user with user id: " + id);
+            throw new ResourceNotFoundException("No notifications found for user with user id: " + id);
         }
 
         return notifications;

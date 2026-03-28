@@ -17,9 +17,9 @@ public class GlobalExceptionHandler {
 
     // This class is used for Not found exception
     @ResponseBody
-    @ExceptionHandler(ResourseNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponseDto> HandleNotFoundException(ResourseNotFoundException exception, HttpServletRequest servletRequest){
+    public ResponseEntity<ErrorResponseDto> HandleNotFoundException(ResourceNotFoundException exception, HttpServletRequest servletRequest){
 
        ErrorResponseDto responseDto = new ErrorResponseDto();
        responseDto.setApiPath(servletRequest.getRequestURI());
