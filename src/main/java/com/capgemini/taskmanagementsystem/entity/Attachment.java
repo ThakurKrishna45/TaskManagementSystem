@@ -18,7 +18,7 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AttachmentID")
-    private Integer attachmentId;
+    private int attachmentId;
 
     @Column(name = "FileName", nullable = false)
     private String fileName;
