@@ -34,4 +34,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Project> projects = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "UserRoles",
+            joinColumns = @JoinColumn(name = "UserID"),
+            inverseJoinColumns = @JoinColumn(name = "UserRoleID")
+    )
+    private Set<UserRole> roles = new HashSet<>();
 }
