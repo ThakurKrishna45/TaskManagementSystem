@@ -3,11 +3,9 @@ package com.capgemini.taskmanagementsystem.controller;
 import com.capgemini.taskmanagementsystem.dto.TaskResponseDto;
 import com.capgemini.taskmanagementsystem.service.ITaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,9 +15,14 @@ import java.util.List;
 public class TaskController {
     final private ITaskService taskService;
     @GetMapping("/getTaskByPriorityAndStatus")
-    public ResponseEntity<TaskResponseDto> getTaskByPriorityAndStatus(@RequestParam String priority,
+    public ResponseEntity<List<TaskResponseDto>> getTaskByPriorityAndStatus(@RequestParam String priority,
                                                                       @RequestParam String status){
         List<TaskResponseDto> taskResponseDto=taskService.getTaskByPriorityAndStatus(priority,status);
-        return null;
+        return ResponseEntity.ok(taskResponseDto);
+    }
+    @GetMapping("/getTaskByCategory")
+    public ResponseEntity<List<TaskResponseDto>> getTaskByCategory(@PathVariable String category){
+        List<TaskResponseDto> taskResponseDto=taskService.getTaskByCategory(category);
+        return ResponseEntity.ok(taskResponseDto);
     }
 }
