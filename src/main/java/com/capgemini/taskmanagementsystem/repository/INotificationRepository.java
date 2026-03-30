@@ -9,14 +9,5 @@ import java.util.List;
 
 public interface INotificationRepository extends JpaRepository<Notification,Integer> {
 
-    List<Notification> findAllNotificationsByCreatedAt(LocalDateTime date);
 
-    @Query("SELECT n from Notification n where n.user.userId IN " +
-            "(SELECT m.user.userId from Task m where m.project.projectId = :projectId)")
-    List<Notification> getAllNotificationsOfAProject(Integer projectId);
-
-
-    List<Notification> findAllNotificationsBetweenDates(LocalDateTime start, LocalDateTime end);
-
-    List<Notification> findAllNotificationsByUserID(Integer id);
 }
