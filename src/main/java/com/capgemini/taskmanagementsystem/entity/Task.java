@@ -7,7 +7,8 @@ import java.util.*;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
 
     @Id

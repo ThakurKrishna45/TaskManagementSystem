@@ -7,9 +7,11 @@ import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.IUserRepository;
 import com.capgemini.taskmanagementsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserService implements IUserService {
 
     @Autowired

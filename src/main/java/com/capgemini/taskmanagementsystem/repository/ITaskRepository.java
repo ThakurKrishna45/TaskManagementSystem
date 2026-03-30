@@ -15,6 +15,6 @@ public interface ITaskRepository extends JpaRepository<Task,Integer> {
     List<Task> findByPriorityAndStatus(String priority, String status);
 
     List<Task> findByCategories_CategoryName(String categoryName);
-    @Query("select e from Task e where e.ProjectId=projectId")
+    @Query("select e from Task e where e.project.projectId=:projectId")
     List<Task> findByProjectProjectId(@Param("projectId")Integer projectId);
 }

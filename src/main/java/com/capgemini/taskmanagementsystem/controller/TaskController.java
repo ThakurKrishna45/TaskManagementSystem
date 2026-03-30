@@ -20,7 +20,7 @@ public class TaskController {
         List<TaskResponseDto> taskResponseDto=taskService.getTaskByPriorityAndStatus(priority,status);
         return ResponseEntity.ok(taskResponseDto);
     }
-    @GetMapping("/getTaskByCategory")
+    @GetMapping("/getTaskByCategory/{category}")
     public ResponseEntity<List<TaskResponseDto>> getTaskByCategory(@PathVariable String category){
         List<TaskResponseDto> taskResponseDto=taskService.getTaskByCategory(category);
         return ResponseEntity.ok(taskResponseDto);
