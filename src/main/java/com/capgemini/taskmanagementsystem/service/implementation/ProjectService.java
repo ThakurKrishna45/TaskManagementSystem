@@ -29,7 +29,7 @@ public class ProjectService implements IProjectService {
 
     @Override
     public List<Project> getAllProjectByUserId(Integer userId){
-        List<Project> allProjectByUser = projectRepository.findAllByUserId(userId);
+        List<Project> allProjectByUser = projectRepository.findAllByUserUserId(userId);
         if (allProjectByUser != null){
             return allProjectByUser;
         }

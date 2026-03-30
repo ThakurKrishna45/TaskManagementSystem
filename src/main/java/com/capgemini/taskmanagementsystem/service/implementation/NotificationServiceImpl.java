@@ -1,6 +1,5 @@
 package com.capgemini.taskmanagementsystem.service.implementation;
 
-import com.capgemini.taskmanagementsystem.dto.ErrorResponseDto;
 import com.capgemini.taskmanagementsystem.dto.NotificationResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Notification;
 import com.capgemini.taskmanagementsystem.exception.MissingFieldException;
@@ -8,10 +7,6 @@ import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.repository.INotificationRepository;
 import com.capgemini.taskmanagementsystem.service.INotificationService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
