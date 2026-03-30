@@ -1,9 +1,8 @@
 package com.capgemini.taskmanagementsystem.mapper;
 
-import com.capgemini.taskmanagementsystem.dto.ProjectRequestDto;
-import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
-import com.capgemini.taskmanagementsystem.dto.UserRequestDto;
-import com.capgemini.taskmanagementsystem.dto.UserResponseDto;
+import com.capgemini.taskmanagementsystem.dto.*;
+import com.capgemini.taskmanagementsystem.entity.Comment;
+import com.capgemini.taskmanagementsystem.entity.Notification;
 import com.capgemini.taskmanagementsystem.entity.Project;
 import com.capgemini.taskmanagementsystem.entity.User;
 
@@ -32,5 +31,32 @@ public class Mapper {
         project.setStartDate(projectRequestDto.getStartDate());
         project.setEndDate(projectRequestDto.getEndDate());
         return project;
+    }
+
+    public static NotificationResponseDto notificationToNotificationResponseDto(Notification notification) {
+        NotificationResponseDto notificationResponseDto = new NotificationResponseDto();
+        notificationResponseDto.setText(notification.getText());
+        notificationResponseDto.setCreatedAt(notification.getCreatedAt());
+        notificationResponseDto.setNotificationID(notification.getNotificationID());
+        return notificationResponseDto;
+    }
+
+    public static Notification notificationRequestDtoToNotification(NotificationRequestDto notificationRequestDto) {
+        Notification notification = new Notification();
+        notification.setUser(notificationRequestDto.getUser());
+        notification.setText(notificationRequestDto.getText());
+        notification.setCreatedAt(notificationRequestDto.getCreatedAt());
+        return notification;
+    }
+
+    public static CommentResponseDto mapCommentToResponseDto(Comment comment, CommentResponseDto dto) {
+
+        dto.setCommentId(comment.getCommentId());
+        dto.setText(comment.getText());
+        dto.setCreatedAt(comment.getCreatedAt());
+        dto.setTaskId(comment.getTask().getTaskID());
+        dto.setUsername(comment.getUser().getUsername());
+
+        return dto;
     }
 }
