@@ -3,7 +3,6 @@ package com.capgemini.taskmanagementsystem.service.implementation;
 import com.capgemini.taskmanagementsystem.dto.CommentResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Comment;
 import com.capgemini.taskmanagementsystem.entity.Task;
-import com.capgemini.taskmanagementsystem.mapper.UserMapper;
 import com.capgemini.taskmanagementsystem.repository.ICommentRepository;
 import com.capgemini.taskmanagementsystem.repository.ITaskRepository;
 import com.capgemini.taskmanagementsystem.service.ICommentService;

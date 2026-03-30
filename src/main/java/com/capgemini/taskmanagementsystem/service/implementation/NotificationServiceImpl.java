@@ -1,19 +1,16 @@
 package com.capgemini.taskmanagementsystem.service.implementation;
 
-import com.capgemini.taskmanagementsystem.dto.ErrorResponseDto;
 import com.capgemini.taskmanagementsystem.dto.NotificationRequestDto;
 import com.capgemini.taskmanagementsystem.dto.NotificationResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Notification;
 import com.capgemini.taskmanagementsystem.exception.MissingFieldException;
 import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
-import com.capgemini.taskmanagementsystem.mapper.UserMapper;
 import com.capgemini.taskmanagementsystem.repository.INotificationRepository;
 import com.capgemini.taskmanagementsystem.service.INotificationService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

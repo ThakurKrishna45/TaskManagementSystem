@@ -13,4 +13,5 @@ public interface IProjectRepository extends JpaRepository<Project,Integer> {
     List<Project> findProjectByTimeDuration(@Param("startDate")LocalDate startDate,@Param("endDate") LocalDate endDate);
 
     List<Project> findAllByUserId(Integer userId);
+
 }
