@@ -10,4 +10,7 @@ import java.util.List;
 public interface INotificationRepository extends JpaRepository<Notification,Integer> {
 
 
+
+    List<Notification> findByUserUserID(Integer id);
+
 }

@@ -71,7 +71,8 @@ public class NotificationServiceImpl implements INotificationService {
 
     @Override
     public List<NotificationResponseDto> getNRecentNotifications(Integer id, Integer n) {
-        List<Notification> notifications = notificationRepository.findAllNotificationsByUserID(id);
+
+        List<Notification> notifications = notificationRepository.findByUserUserID(id);
         if (notifications.isEmpty()) {
             throw new ResourceNotFoundException("No notifications found for user with id: " + id);
         }
