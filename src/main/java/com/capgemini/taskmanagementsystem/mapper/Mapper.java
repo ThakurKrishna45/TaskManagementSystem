@@ -3,7 +3,7 @@ package com.capgemini.taskmanagementsystem.mapper;
 import com.capgemini.taskmanagementsystem.dto.CommentResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Comment;
 
-public class UserMapper {
+public class Mapper {
     public static CommentResponseDto mapCommentToResponseDto(Comment comment, CommentResponseDto dto) {
 
         dto.setCommentId(comment.getCommentId());

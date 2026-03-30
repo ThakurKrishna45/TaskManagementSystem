@@ -3,7 +3,7 @@ package com.capgemini.taskmanagementsystem.service.implementation;
 import com.capgemini.taskmanagementsystem.dto.CommentResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Comment;
 import com.capgemini.taskmanagementsystem.entity.Task;
-import com.capgemini.taskmanagementsystem.mapper.UserMapper;
+import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.ICommentRepository;
 import com.capgemini.taskmanagementsystem.repository.ITaskRepository;
 import com.capgemini.taskmanagementsystem.service.ICommentService;
@@ -29,7 +29,7 @@ public class CommentServiceImpl implements ICommentService {
 
         for (Comment comment : comments) {
             CommentResponseDto dto = new CommentResponseDto();
-            dto = UserMapper.mapCommentToResponseDto(comment, dto);
+            dto = Mapper.mapCommentToResponseDto(comment, dto);
             responseList.add(dto);
         }
 

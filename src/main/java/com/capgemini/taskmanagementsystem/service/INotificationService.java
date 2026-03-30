@@ -11,17 +11,17 @@ import java.util.List;
 
 public interface INotificationService {
     //Crud operations
-    NotificationDto addNotification(Notification notification);
-    NotificationDto updateNotification(Notification notification) throws MissingFieldException;
-    void  deleteNotification(Notification notification) throws MissingFieldException;
-
-    //Queries
-    Notification getNotificationById(Integer id);
-    List<NotificationDto> getAllNotificationsOfAProject(Integer projectId);
-    List<NotificationDto> getAllNotificationsBetweenARange(LocalDateTime start, LocalDateTime end);
-    List<NotificationDto> getallNotificationsOfAUser(Integer userId);
-    List<NotificationResponseDto> getNRecentNotifications(Integer id , Integer n);
-
+//    NotificationDto addNotification(Notification notification);
+//    NotificationDto updateNotification(Notification notification) throws MissingFieldException;
+//    void  deleteNotification(Notification notification) throws MissingFieldException;
+//
+//    //Queries
+//    Notification getNotificationById(Integer id);
+//    List<NotificationDto> getAllNotificationsOfAProject(Integer projectId);
+//    List<NotificationDto> getAllNotificationsBetweenARange(LocalDateTime start, LocalDateTime end);
+//    List<NotificationDto> getallNotificationsOfAUser(Integer userId);
+//    List<NotificationResponseDto> getNRecentNotifications(Integer id , Integer n);
+//
 
 
 
