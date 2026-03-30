@@ -3,19 +3,26 @@ package com.capgemini.taskmanagementsystem.service.implementation;
 import com.capgemini.taskmanagementsystem.dto.CommentResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Comment;
 import com.capgemini.taskmanagementsystem.entity.Task;
+import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.ICommentRepository;
 import com.capgemini.taskmanagementsystem.repository.ITaskRepository;
 import com.capgemini.taskmanagementsystem.service.ICommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
+@Service
+//@RequiredArgsConstructor
 public class CommentServiceImpl implements ICommentService {
-    private final ICommentRepository commentRepository;
-    private final ITaskRepository taskRepository;
+
+    @Autowired
+    ICommentRepository commentRepository;
+    @Autowired
+    ITaskRepository taskRepository;
 
     @Override
     public List<CommentResponseDto> getAllCommentsByTaskId(Integer taskId) {
@@ -23,7 +30,7 @@ public class CommentServiceImpl implements ICommentService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + taskId));
 
-        List<Comment> comments = commentRepository.findByTaskTaskId(taskId);
+        List<Comment> comments = commentRepository.findByTaskTaskID(taskId);
 
         List<CommentResponseDto> responseList = new ArrayList<>();
 
@@ -34,5 +41,6 @@ public class CommentServiceImpl implements ICommentService {
         }
 
         return responseList;
+
     }
 }

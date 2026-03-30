@@ -10,10 +10,9 @@ import java.time.LocalDate;
 import java.util.List;
 @Repository
 public interface IProjectRepository extends JpaRepository<Project,Integer> {
-    @Query("select p from Project p where p.startDate<=endDate and p.endDate>=startDate")
+    @Query("select p from Project p where p.startDate<=:endDate and p.endDate>=:startDate")
     List<Project> findProjectByTimeDuration(@Param("startDate")LocalDate startDate,@Param("endDate") LocalDate endDate);
-
-    List<Project> findAllByUserUserId(Integer userId);
+    @Query("select p from Project p where p.user.userId=:userId")
     List<Project> findAllByUserId(Integer userId);
 
 }
