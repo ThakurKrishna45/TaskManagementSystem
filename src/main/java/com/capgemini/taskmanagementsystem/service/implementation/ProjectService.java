@@ -1,14 +1,19 @@
 package com.capgemini.taskmanagementsystem.service.implementation;
 
 import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
+import com.capgemini.taskmanagementsystem.dto.ProjectSummarry;
 import com.capgemini.taskmanagementsystem.entity.Project;
+import com.capgemini.taskmanagementsystem.entity.Task;
 import com.capgemini.taskmanagementsystem.entity.User;
 import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.IProjectRepository;
+import com.capgemini.taskmanagementsystem.repository.ITaskRepository;
 import com.capgemini.taskmanagementsystem.repository.IUserRepository;
 import com.capgemini.taskmanagementsystem.service.IProjectService;
+import com.capgemini.taskmanagementsystem.service.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,6 +27,9 @@ public class ProjectService implements IProjectService {
     IProjectRepository projectRepository;
     @Autowired
     IUserRepository userRepository;
+    @Autowired
+    ITaskRepository taskRepository;
+
 
 
     @Override
@@ -56,4 +64,17 @@ public class ProjectService implements IProjectService {
             throw new ResourceNotFoundException("No Projects given to this user");
         }
     }
+
+    public List<ProjectSummarry> getSummary(Integer projectId){
+        List<Task> listOfTasks = taskRepository.findByProjectProjectId(projectId);
+        if (listOfTasks == null){
+            throw new ResourceNotFoundException("No Summary for this Project");
+        }
+        List<ProjectSummarry> summaries = new ArrayList<>();
+        for (Task task:listOfTasks){
+            summaries.add(new ProjectSummarry(task.getUser().getUsername(),task.getUser().getFullName(),task.getTaskName(),task.getStatus()));
+        }
+        return summaries;
+    }
+
 }
