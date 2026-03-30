@@ -15,7 +15,6 @@ public class CommentController {
     @Autowired
     private ICommentService commentService;
 
-    // 🔹 GET API to fetch all comments by Task ID
     @GetMapping("/getallcommentsbytaskid/{taskId}")
     public List<CommentResponseDto> getAllCommentsByTaskId(@PathVariable Integer taskId) {
 

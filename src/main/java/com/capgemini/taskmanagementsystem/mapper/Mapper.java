@@ -1,7 +1,5 @@
 package com.capgemini.taskmanagementsystem.mapper;
 
-import com.capgemini.taskmanagementsystem.dto.*;
-import com.capgemini.taskmanagementsystem.entity.*;
 import com.capgemini.taskmanagementsystem.entity.Comment;
 import com.capgemini.taskmanagementsystem.entity.Notification;
 import com.capgemini.taskmanagementsystem.entity.Project;
