@@ -2,7 +2,6 @@ package com.capgemini.taskmanagementsystem.controller;
 
 import com.capgemini.taskmanagementsystem.dto.NotificationRequestDto;
 import com.capgemini.taskmanagementsystem.dto.NotificationResponseDto;
-import com.capgemini.taskmanagementsystem.entity.Notification;
 import com.capgemini.taskmanagementsystem.service.INotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,7 @@ public class NotificationController {
 
     @GetMapping("/getnotif/{id}")
     public ResponseEntity<NotificationResponseDto> getNotificationById(@PathVariable Integer id) {
-        return new ResponseEntity<>(notificationService.getNotificationById(id), HttpStatus.OK);
+        return new ResponseEntity<NotificationResponseDto>(notificationService.getNotificationById(id), HttpStatus.OK);
     }
 
     @GetMapping("/getnrecentnotif/{id}/{n}")

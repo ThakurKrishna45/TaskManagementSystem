@@ -31,11 +31,11 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     public NotificationResponseDto updateNotification(NotificationRequestDto notification) throws MissingFieldException {
-        Notification notificationEntity = Mapper.notificationRequestDtoToNotification(notification);
+        Notification notificationEntity = UserMapper.notificationRequestDtoToNotification(notification);
 
         if (notificationRepository.existsById(notificationEntity.getNotificationID())) {
             notificationRepository.save(notificationEntity);
-            NotificationResponseDto notificationResponseDto =  Mapper.notificationToNotificationResponseDto(notificationEntity);;
+            NotificationResponseDto notificationResponseDto =  UserMapper.notificationToNotificationResponseDto(notificationEntity);;
             return notificationResponseDto;
 
         }
@@ -58,7 +58,7 @@ public class NotificationServiceImpl implements INotificationService {
         Optional<Notification> notification = notificationRepository.findById(id);
 
         if (notification.isPresent()) {
-            NotificationResponseDto notificationResponseDto = Mapper.notificationToNotificationResponseDto(notification.get());
+            NotificationResponseDto notificationResponseDto = UserMapper.notificationToNotificationResponseDto(notification.get());
             return notificationResponseDto;
         }
 
@@ -80,7 +80,7 @@ public class NotificationServiceImpl implements INotificationService {
         notifications.stream()
                 .sorted((n1, n2) -> n2.getCreatedAt().compareTo(n1.getCreatedAt()))
                 .limit(n)
-                .forEach(notification -> recentNotifications.add(Mapper.notificationToNotificationResponseDto(notification)));
+                .forEach(notification -> recentNotifications.add(UserMapper.notificationToNotificationResponseDto(notification)));
 
         return recentNotifications;
     }
