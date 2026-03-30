@@ -1,6 +1,7 @@
 package com.capgemini.taskmanagementsystem.mapper;
 
 import com.capgemini.taskmanagementsystem.dto.*;
+import com.capgemini.taskmanagementsystem.entity.*;
 import com.capgemini.taskmanagementsystem.entity.Comment;
 import com.capgemini.taskmanagementsystem.entity.Notification;
 import com.capgemini.taskmanagementsystem.entity.Project;
@@ -57,6 +58,17 @@ public class Mapper {
         dto.setTaskId(comment.getTask().getTaskID());
         dto.setUsername(comment.getUser().getUsername());
 
+        return dto;
+    }
+    public static TaskResponseDto taskToTaskResponseDto(Task task){
+        TaskResponseDto dto=new TaskResponseDto();
+        dto.setTaskName(task.getTaskName());
+        if(task.getDescription()!=null)dto.setDescription(task.getDescription());
+        dto.setDueDate(task.getDueDate());
+        dto.setPriority(task.getPriority());
+        dto.setStatus(task.getStatus());
+        dto.setProjectName(task.getProject().getProjectName());
+        dto.setUsername(task.getUser().getUsername());
         return dto;
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ITaskService {
     List<TaskResponseDto> getTaskByPriorityAndStatus(String priority, String status);
+
+    List<TaskResponseDto> getTaskByCategory(String category);
 }
