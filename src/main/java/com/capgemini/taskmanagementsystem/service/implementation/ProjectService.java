@@ -4,22 +4,18 @@ import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
 import com.capgemini.taskmanagementsystem.dto.ProjectSummarry;
 import com.capgemini.taskmanagementsystem.entity.Project;
 import com.capgemini.taskmanagementsystem.entity.Task;
-import com.capgemini.taskmanagementsystem.entity.User;
 import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.IProjectRepository;
 import com.capgemini.taskmanagementsystem.repository.ITaskRepository;
 import com.capgemini.taskmanagementsystem.repository.IUserRepository;
 import com.capgemini.taskmanagementsystem.service.IProjectService;
-import com.capgemini.taskmanagementsystem.service.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProjectService implements IProjectService {

@@ -5,6 +5,7 @@ import com.capgemini.taskmanagementsystem.dto.NotificationResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Notification;
 import com.capgemini.taskmanagementsystem.exception.MissingFieldException;
 import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
+import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.INotificationRepository;
 import com.capgemini.taskmanagementsystem.service.INotificationService;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,11 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     public NotificationResponseDto updateNotification(NotificationRequestDto notification) throws MissingFieldException {
-        Notification notificationEntity = UserMapper.notificationRequestDtoToNotification(notification);
+        Notification notificationEntity = Mapper.notificationRequestDtoToNotification(notification);
 
         if (notificationRepository.existsById(notificationEntity.getNotificationID())) {
             notificationRepository.save(notificationEntity);
-            NotificationResponseDto notificationResponseDto =  UserMapper.notificationToNotificationResponseDto(notificationEntity);;
+            NotificationResponseDto notificationResponseDto =  Mapper.notificationToNotificationResponseDto(notificationEntity);;
             return notificationResponseDto;
 
         }
@@ -57,7 +58,7 @@ public class NotificationServiceImpl implements INotificationService {
         Optional<Notification> notification = notificationRepository.findById(id);
 
         if (notification.isPresent()) {
-            NotificationResponseDto notificationResponseDto = UserMapper.notificationToNotificationResponseDto(notification.get());
+            NotificationResponseDto notificationResponseDto = Mapper.notificationToNotificationResponseDto(notification.get());
             return notificationResponseDto;
         }
 
@@ -79,7 +80,7 @@ public class NotificationServiceImpl implements INotificationService {
         notifications.stream()
                 .sorted((n1, n2) -> n2.getCreatedAt().compareTo(n1.getCreatedAt()))
                 .limit(n)
-                .forEach(notification -> recentNotifications.add(UserMapper.notificationToNotificationResponseDto(notification)));
+                .forEach(notification -> recentNotifications.add(Mapper.notificationToNotificationResponseDto(notification)));
 
         return recentNotifications;
     }
