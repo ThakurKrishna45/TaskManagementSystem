@@ -1,6 +1,7 @@
 package com.capgemini.taskmanagementsystem.service;
 
 import com.capgemini.taskmanagementsystem.dto.TaskResponseDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
