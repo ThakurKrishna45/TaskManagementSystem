@@ -15,10 +15,17 @@ public class CommentController {
     @Autowired
     private ICommentService commentService;
 
-//     🔹 GET API to fetch all comments by Task ID
     @GetMapping("/getallcommentsbytaskid/{taskId}")
     public List<CommentResponseDto> getAllCommentsByTaskId(@PathVariable Integer taskId) {
 
         return commentService.getAllCommentsByTaskId(taskId);
+    }
+
+    @GetMapping("/getAllCommentsByUserOnTask")
+    public List<CommentResponseDto> getAllCommentsByUserOnTask(
+            @RequestParam Integer taskId,
+            @RequestParam Integer userId) {
+
+        return commentService.getAllCommentsByUserOnTask(taskId, userId);
     }
 }

@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.List;
+//import java.util.List;
 
 @Repository
 public interface ICommentRepository extends JpaRepository<Comment,Integer> {
 //    @Query("select e from Comment e where e.task.taskId=:taskId")
     List<Comment> findByTaskTaskID(Integer taskID);
+
+    List<Comment> findByTaskTaskIDAndUserUserId(Integer taskId, Integer userId);
 }

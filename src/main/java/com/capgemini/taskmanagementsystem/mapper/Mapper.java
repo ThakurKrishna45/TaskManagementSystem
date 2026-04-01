@@ -1,9 +1,7 @@
 package com.capgemini.taskmanagementsystem.mapper;
 
-import com.capgemini.taskmanagementsystem.entity.Comment;
-import com.capgemini.taskmanagementsystem.entity.Notification;
-import com.capgemini.taskmanagementsystem.entity.Project;
-import com.capgemini.taskmanagementsystem.entity.User;
+import com.capgemini.taskmanagementsystem.dto.*;
+import com.capgemini.taskmanagementsystem.entity.*;
 
 public class Mapper {
 
@@ -68,5 +66,17 @@ public class Mapper {
         dto.setProjectName(task.getProject().getProjectName());
         dto.setUsername(task.getUser().getUsername());
         return dto;
+    }
+
+    public static CommentResponseDto mapCommentToResponseDto(Comment comment) {
+
+        return CommentResponseDto.builder()
+                .commentId(comment.getCommentId())
+                .text(comment.getText())
+                .createdAt(comment.getCreatedAt())
+                .taskId(comment.getTask().getTaskID())
+                .userId(comment.getUser().getUserId())
+                .username(comment.getUser().getUsername())
+                .build();
     }
 }

@@ -7,8 +7,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://localhost:3306/taskmanagement
-    username: hello
-    password: 12345
+    username: root
+    password: Parth@#rdbms
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
