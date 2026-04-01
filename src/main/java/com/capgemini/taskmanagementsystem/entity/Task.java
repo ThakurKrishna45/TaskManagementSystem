@@ -53,4 +53,14 @@ public class Task {
 
     @OneToMany(mappedBy = "task")
     private List<Attachment> attachments = new ArrayList<>();
+
+    public Task(String taskName, String description, LocalDate dueDate, String priority, String status, Project project, User user) {
+        this.taskName = taskName;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.status = status;
+        this.project = project;
+        this.user = user;
+    }
 }

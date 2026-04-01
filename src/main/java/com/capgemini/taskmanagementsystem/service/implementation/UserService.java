@@ -9,6 +9,7 @@ import com.capgemini.taskmanagementsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,16 @@ public class UserService implements IUserService {
         }
         else{
             throw new ResourceNotFoundException("User Not Found Exception");
+        }
+    }
+
+    public UserResponseDto getUserByUsername(String username){
+        List<User> userList = userRepository.findByUsername(username);
+        if (userList ==null){
+            throw new ResourceNotFoundException("No User Found for this Username: "+username);
+        }
+        else{
+            return Mapper.userToDto(userList.get(0));
         }
     }
 }

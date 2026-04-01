@@ -1,7 +1,6 @@
 package com.capgemini.taskmanagementsystem.controller;
 
 import com.capgemini.taskmanagementsystem.dto.UserResponseDto;
-import com.capgemini.taskmanagementsystem.entity.User;
 import com.capgemini.taskmanagementsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,5 +19,10 @@ public class UserController {
     @GetMapping("findById/{userId}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Integer userId){
         return new ResponseEntity<UserResponseDto>(userService.getUserById(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("findByUsername/{username}")
+    public ResponseEntity<UserResponseDto> getUserByUsername(@PathVariable String username){
+        return new ResponseEntity<UserResponseDto>(userService.getUserByUsername(username),HttpStatus.OK);
     }
 }
