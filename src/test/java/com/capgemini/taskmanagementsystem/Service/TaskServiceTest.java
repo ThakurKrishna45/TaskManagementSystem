@@ -1,4 +1,4 @@
-package com.capgemini.taskmanagementsystem;
+package com.capgemini.taskmanagementsystem.Service;
 
 import com.capgemini.taskmanagementsystem.dto.TaskResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Project;

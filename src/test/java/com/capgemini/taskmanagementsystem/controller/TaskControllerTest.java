@@ -1,6 +1,5 @@
-package com.capgemini.taskmanagementsystem;
+package com.capgemini.taskmanagementsystem.controller;
 
-import com.capgemini.taskmanagementsystem.controller.TaskController;
 import com.capgemini.taskmanagementsystem.dto.TaskResponseDto;
 import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.service.ITaskService;
