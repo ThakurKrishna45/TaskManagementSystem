@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectSummarry {
+public class ProjectSummaryResponseDto {
     private String userName;
     private String name;
     private String task;

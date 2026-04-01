@@ -1,9 +1,8 @@
 package com.capgemini.taskmanagementsystem.controller;
 
 import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
-import com.capgemini.taskmanagementsystem.dto.ProjectSummarry;
+import com.capgemini.taskmanagementsystem.dto.ProjectSummaryResponseDto;
 import com.capgemini.taskmanagementsystem.service.IProjectService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +32,8 @@ public class ProjectController {
     }
 
     @GetMapping("summary/{projectId}")
-    public ResponseEntity<List<ProjectSummarry>> getSummary(@PathVariable Integer projectId){
-        return new ResponseEntity<List<ProjectSummarry>>(projectService.getSummary(projectId),HttpStatus.OK);
+    public ResponseEntity<List<ProjectSummaryResponseDto>> getSummary(@PathVariable Integer projectId){
+        return new ResponseEntity<List<ProjectSummaryResponseDto>>(projectService.getSummary(projectId),HttpStatus.OK);
     }
 
 }
