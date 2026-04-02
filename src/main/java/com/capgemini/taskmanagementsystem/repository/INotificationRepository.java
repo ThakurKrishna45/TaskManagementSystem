@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface INotificationRepository extends JpaRepository<Notification,Integer> {
 
-
     @Query("select e from Notification e where e.user.userId=:id")
     List<Notification> findByUserUserID(Integer id);
 
