@@ -16,9 +16,7 @@ public class GlobalExceptionHandler {
 
 
     // This class is used for Not found exception
-    @ResponseBody
     @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponseDto> HandleNotFoundException(ResourceNotFoundException exception, HttpServletRequest servletRequest){
 
        ErrorResponseDto responseDto = new ErrorResponseDto();
@@ -30,10 +28,8 @@ public class GlobalExceptionHandler {
        return new ResponseEntity<ErrorResponseDto>(responseDto,HttpStatus.NOT_FOUND);
     }
 
-    // This class is used for Login details or unauthorized details
-    @ResponseBody
+
     @ExceptionHandler(UnauthorizedException.class)
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ErrorResponseDto> HandleUnauthorizedException(UnauthorizedException exception,HttpServletRequest servletRequest){
         ErrorResponseDto responseDto = new ErrorResponseDto();
         responseDto.setApiPath(servletRequest.getRequestURI());
@@ -45,10 +41,8 @@ public class GlobalExceptionHandler {
     }
 
     // This class is used for Missing Field
-    @ResponseBody
     @ExceptionHandler(MissingFieldException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponseDto> HandleMissingFieldException(UnauthorizedException exception,HttpServletRequest servletRequest){
+    public ResponseEntity<ErrorResponseDto> HandleMissingFieldException(MissingFieldException exception,HttpServletRequest servletRequest){
         ErrorResponseDto responseDto = new ErrorResponseDto();
         responseDto.setErrorMessage(exception.getMessage());
         responseDto.setErrorTime(LocalDateTime.now());

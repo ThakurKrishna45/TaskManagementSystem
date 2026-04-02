@@ -1,5 +1,6 @@
 package com.capgemini.taskmanagementsystem.service.implementation;
 
+import com.capgemini.taskmanagementsystem.dto.UserRequestDto;
 import com.capgemini.taskmanagementsystem.dto.UserResponseDto;
 import com.capgemini.taskmanagementsystem.entity.User;
 import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
@@ -29,6 +30,7 @@ public class UserService implements IUserService {
         }
     }
 
+    @Override
     public UserResponseDto getUserByUsername(String username){
         List<User> userList = userRepository.findByUsername(username);
         if (userList ==null){
@@ -38,4 +40,23 @@ public class UserService implements IUserService {
             return Mapper.userToDto(userList.get(0));
         }
     }
+
+    @Override
+    public UserResponseDto updateUser(Integer userId,UserRequestDto userRequestDto) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()){
+            User user = optionalUser.get();
+            user.setEmail(userRequestDto.getEmail());
+            user.setPassword(userRequestDto.getPassword());
+            user.setFullName(userRequestDto.getFullName());
+            user.setUsername(userRequestDto.getUsername());
+
+            userRepository.saveAndFlush(user);
+            return Mapper.userToDto(user);
+        }
+        throw new ResourceNotFoundException("No user Found");
+
+    }
+
+
 }
