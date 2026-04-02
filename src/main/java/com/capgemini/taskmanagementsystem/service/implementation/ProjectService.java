@@ -1,7 +1,7 @@
 package com.capgemini.taskmanagementsystem.service.implementation;
 
 import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
-import com.capgemini.taskmanagementsystem.dto.ProjectSummarry;
+import com.capgemini.taskmanagementsystem.dto.ProjectSummaryResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Project;
 import com.capgemini.taskmanagementsystem.entity.Task;
 import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
@@ -61,14 +61,14 @@ public class ProjectService implements IProjectService {
         }
     }
 
-    public List<ProjectSummarry> getSummary(Integer projectId){
+    public List<ProjectSummaryResponseDto> getSummary(Integer projectId){
         List<Task> listOfTasks = taskRepository.findByProjectProjectId(projectId);
         if (listOfTasks == null){
             throw new ResourceNotFoundException("No Summary for this Project");
         }
-        List<ProjectSummarry> summaries = new ArrayList<>();
+        List<ProjectSummaryResponseDto> summaries = new ArrayList<>();
         for (Task task:listOfTasks){
-            summaries.add(new ProjectSummarry(task.getUser().getUsername(),task.getUser().getFullName(),task.getTaskName(),task.getStatus()));
+            summaries.add(new ProjectSummaryResponseDto(task.getUser().getUsername(),task.getUser().getFullName(),task.getTaskName(),task.getStatus()));
         }
         return summaries;
     }

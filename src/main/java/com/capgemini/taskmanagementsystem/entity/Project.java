@@ -32,4 +32,12 @@ public class Project {
     @ManyToOne()
     @JoinColumn(name="UserId",nullable = false)
     private User user;
+
+    public Project(String projectName, String description, LocalDate startDate, LocalDate endDate, User user) {
+        this.projectName = projectName;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.user = user;
+    }
 }
