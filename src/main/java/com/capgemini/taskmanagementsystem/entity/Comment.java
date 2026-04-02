@@ -30,7 +30,7 @@ public class Comment {
     @JoinColumn(name = "TaskID", nullable = false)
     private Task task;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "UserID", nullable = false)
     private User user;
 
