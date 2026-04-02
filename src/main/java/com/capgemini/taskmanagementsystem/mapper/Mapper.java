@@ -60,6 +60,7 @@ public class Mapper {
 
         return dto;
     }
+
     public static TaskResponseDto taskToTaskResponseDto(Task task){
         TaskResponseDto dto=new TaskResponseDto();
         dto.setTaskName(task.getTaskName());
@@ -70,5 +71,17 @@ public class Mapper {
         dto.setProjectName(task.getProject().getProjectName());
         dto.setUsername(task.getUser().getUsername());
         return dto;
+    }
+
+    public static CommentResponseDto mapCommentToResponseDto(Comment comment) {
+
+        return CommentResponseDto.builder()
+                .commentId(comment.getCommentId())
+                .text(comment.getText())
+                .createdAt(comment.getCreatedAt())
+                .taskId(comment.getTask().getTaskID())
+                .userId(comment.getUser().getUserId())
+                .username(comment.getUser().getUsername())
+                .build();
     }
 }
