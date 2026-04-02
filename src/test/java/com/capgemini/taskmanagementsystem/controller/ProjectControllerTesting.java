@@ -1,6 +1,5 @@
-package com.capgemini.taskmanagementsystem;
+package com.capgemini.taskmanagementsystem.controller;
 
-import com.capgemini.taskmanagementsystem.controller.ProjectController;
 import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
 import com.capgemini.taskmanagementsystem.dto.ProjectSummaryResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Project;
@@ -14,14 +13,12 @@ import com.capgemini.taskmanagementsystem.repository.IUserRepository;
 import com.capgemini.taskmanagementsystem.service.ILoginService;
 import com.capgemini.taskmanagementsystem.service.IProjectService;
 import jakarta.servlet.http.HttpSession;
-import net.bytebuddy.build.Plugin;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
