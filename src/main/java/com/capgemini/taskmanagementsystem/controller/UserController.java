@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UserResponseDto> deleteUser(@RequestParam Integer userId,@RequestBody UserRequestDto userRequestDto){
+    public ResponseEntity<UserResponseDto> UpdateUser(@RequestParam Integer userId,@RequestBody UserRequestDto userRequestDto){
         if (userId==null || userRequestDto.isNull()) {
             throw new MissingFieldException("UserId can not be null");
         }
