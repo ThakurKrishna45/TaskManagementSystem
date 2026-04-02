@@ -6,9 +6,9 @@ spring:
     name: taskmanagementsystem
 
   datasource:
-    url: jdbc:mysql://10.10.167.212:3306/taskmanagement
-    username: hello
-    password: 12345
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
