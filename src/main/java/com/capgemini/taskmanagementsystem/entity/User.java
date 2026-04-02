@@ -36,6 +36,9 @@ public class User {
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<>();
 
     @ManyToMany

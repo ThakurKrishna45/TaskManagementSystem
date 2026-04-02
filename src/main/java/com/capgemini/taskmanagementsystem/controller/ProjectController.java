@@ -30,13 +30,11 @@ public class ProjectController {
 
     @GetMapping("/allProjectBetweenDuration/{startDate}/{endDate}")
     public ResponseEntity<List<ProjectResponseDto>> getAllProjectByTimeline(@PathVariable LocalDate startDate,@PathVariable LocalDate endDate,HttpSession httpSession){
-        loginService.isLogin(httpSession);
         return new ResponseEntity<List<ProjectResponseDto>>(projectService.getProjectByTimeDuration(startDate,endDate), HttpStatus.OK);
     }
 
     @GetMapping("allProjectByUserId/{userId}")
     public ResponseEntity<List<ProjectResponseDto>> getAllProjectByUserId(@PathVariable Integer userId,HttpSession httpSession){
-        loginService.isLogin(httpSession);
         return new ResponseEntity<List<ProjectResponseDto>>(projectService.getAllProjectByUserId(userId),HttpStatus.OK);
     }
 
