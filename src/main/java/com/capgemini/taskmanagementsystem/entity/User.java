@@ -35,10 +35,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Project> projects = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "UserRoles",
             joinColumns = @JoinColumn(name = "UserID"),

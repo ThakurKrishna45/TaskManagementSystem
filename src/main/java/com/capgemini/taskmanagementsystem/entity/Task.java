@@ -36,7 +36,7 @@ public class Task {
     @JoinColumn(name = "ProjectID")
     private Project project;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "UserID")
     private User user;
 

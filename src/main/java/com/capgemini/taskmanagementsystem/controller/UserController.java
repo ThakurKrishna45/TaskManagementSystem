@@ -1,14 +1,13 @@
 package com.capgemini.taskmanagementsystem.controller;
 
+import com.capgemini.taskmanagementsystem.dto.UserRequestDto;
 import com.capgemini.taskmanagementsystem.dto.UserResponseDto;
+import com.capgemini.taskmanagementsystem.exception.MissingFieldException;
 import com.capgemini.taskmanagementsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user/")
@@ -24,5 +23,13 @@ public class UserController {
     @GetMapping("findByUsername/{username}")
     public ResponseEntity<UserResponseDto> getUserByUsername(@PathVariable String username){
         return new ResponseEntity<UserResponseDto>(userService.getUserByUsername(username),HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<UserResponseDto> deleteUser(@RequestParam Integer userId,@RequestBody UserRequestDto userRequestDto){
+        if (userId==null || userRequestDto.isNull()) {
+            throw new MissingFieldException("UserId can not be null");
+        }
+        return new ResponseEntity<UserResponseDto>(userService.updateUser(userId,userRequestDto),HttpStatus.OK);
     }
 }
