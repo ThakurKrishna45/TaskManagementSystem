@@ -3,17 +3,17 @@ package com.capgemini.taskmanagementsystem.service.implementation;
 import com.capgemini.taskmanagementsystem.dto.CommentResponseDto;
 import com.capgemini.taskmanagementsystem.entity.Comment;
 import com.capgemini.taskmanagementsystem.entity.Task;
-import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.ICommentRepository;
 import com.capgemini.taskmanagementsystem.repository.ITaskRepository;
+import com.capgemini.taskmanagementsystem.repository.IUserRepository;
 import com.capgemini.taskmanagementsystem.service.ICommentService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 //@RequiredArgsConstructor
@@ -23,6 +23,8 @@ public class CommentServiceImpl implements ICommentService {
     ICommentRepository commentRepository;
     @Autowired
     ITaskRepository taskRepository;
+    @Autowired
+    IUserRepository userRepository;
 
     @Override
     public List<CommentResponseDto> getAllCommentsByTaskId(Integer taskId) {
@@ -42,5 +44,16 @@ public class CommentServiceImpl implements ICommentService {
 
         return responseList;
 
+    }
+
+    @Override
+    public List<CommentResponseDto> getAllCommentsByUserOnTask(Integer taskId, Integer userId) {
+
+        List<Comment> comments =
+                commentRepository.findByTaskTaskIDAndUserUserId(taskId, userId);
+
+        return comments.stream()
+                .map(Mapper::mapCommentToResponseDto)
+                .collect(Collectors.toList());
     }
 }

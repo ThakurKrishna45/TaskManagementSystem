@@ -13,5 +13,6 @@ public class CommentResponseDto {
     private String text;
     private LocalDateTime createdAt;
     private Integer taskId;
+    private Integer userId;
     private String username;
 }
