@@ -71,7 +71,7 @@ public class ProjectService implements IProjectService {
         }
         List<ProjectSummaryResponseDto> summaries = new ArrayList<>();
         for (Task task:listOfTasks){
-            summaries.add(new ProjectSummaryResponseDto(task.getUser().getUsername(),task.getUser().getFullName(),task.getTaskName(),task.getStatus()));
+            summaries.add(new ProjectSummaryResponseDto(task.getUser().getUsername(),task.getDueDate(),task.getTaskName(),task.getStatus()));
         }
         return new ProjectSummaryWrapperDto(
                 project.getProjectName(),
