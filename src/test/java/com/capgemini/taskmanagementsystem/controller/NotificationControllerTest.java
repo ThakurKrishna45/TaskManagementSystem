@@ -2,11 +2,14 @@ package com.capgemini.taskmanagementsystem.controller;
 
 import com.capgemini.taskmanagementsystem.dto.NotificationResponseDto;
 import com.capgemini.taskmanagementsystem.service.INotificationService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,6 +33,14 @@ class NotificationControllerTest {
     @MockitoBean
     private INotificationService notificationService;
 
+    private MockHttpSession session;
+
+    @BeforeEach
+    void setUp() {
+        session = new MockHttpSession();
+        session.setAttribute("found", "test");
+    }
+
     @Test
    public void testGetNotificationById_Success() throws Exception {
         NotificationResponseDto notificationResponseDto = new NotificationResponseDto();
@@ -40,7 +51,8 @@ class NotificationControllerTest {
         Mockito.when(notificationService.getNotificationById(1)).thenReturn(notificationResponseDto);
 
         mockMvc.perform(get("/notification/getnotif/1")
-       .contentType(MediaType.APPLICATION_JSON))
+       .contentType(MediaType.APPLICATION_JSON)
+       .session(session))
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) jsonPath("$.notificationID").value(1))
                 .andExpect((ResultMatcher) jsonPath("$.text").value("Test Notification"))
@@ -55,7 +67,8 @@ class NotificationControllerTest {
         Mockito.when(notificationService.getNotificationById(999))
                .thenThrow(new RuntimeException("Notification not found"));
 
-        mockMvc.perform(get("/notification/getnotif/999"))
+        mockMvc.perform(get("/notification/getnotif/999")
+                .session(session))
                 .andExpect(status().isExpectationFailed());
 
     }

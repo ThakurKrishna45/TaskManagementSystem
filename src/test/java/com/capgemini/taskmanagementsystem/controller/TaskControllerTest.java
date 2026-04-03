@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,9 +28,13 @@ public class TaskControllerTest {
     private ITaskService taskService;
     private TaskResponseDto task1;
     private TaskResponseDto task2;
+    private MockHttpSession session;
 
     @BeforeEach
     void setUp() {
+        session = new MockHttpSession();
+        session.setAttribute("found", "test");
+
         task1 = new TaskResponseDto();
         task1.setTaskName("Task1");
         task1.setDescription("Fix Bug");
@@ -50,7 +55,8 @@ public class TaskControllerTest {
         mockMvc.perform(get("/task/getTaskByPriorityAndStatus")
                         .param("priority", "High")
                         .param("status", "Pending")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].taskName").value("Task1"))
                 .andExpect(jsonPath("$[1].taskName").value("Task2"));
@@ -62,7 +68,8 @@ public class TaskControllerTest {
 
         mockMvc.perform(get("/task/getTaskByPriorityAndStatus")
                         .param("priority", "")
-                        .param("status", "Pending"))
+                        .param("status", "Pending")
+                        .session(session))
                 .andExpect(status().isNotFound());
     }
     @Test
@@ -74,7 +81,8 @@ public class TaskControllerTest {
                 .thenReturn(tasks);
 
         mockMvc.perform(get("/task/getTaskByCategory/{category}", category)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].taskName").value("Task1"));
     }

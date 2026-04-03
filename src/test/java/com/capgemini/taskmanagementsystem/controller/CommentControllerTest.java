@@ -3,12 +3,15 @@ package com.capgemini.taskmanagementsystem.controller;
 import com.capgemini.taskmanagementsystem.dto.CommentResponseDto;
 import com.capgemini.taskmanagementsystem.service.ICommentService;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,7 +30,13 @@ public class CommentControllerTest {
 
     @MockitoBean
     private ICommentService commentService;
+    private MockHttpSession session;
 
+    @BeforeEach
+    void setUp() {
+        session = new MockHttpSession();
+        session.setAttribute("found", "test");
+    }
     // ✅ Test 1: getAllCommentsByTaskId
     @Test
     public void testGetAllCommentsByTaskId_Success() throws Exception {
@@ -40,7 +49,9 @@ public class CommentControllerTest {
         Mockito.when(commentService.getAllCommentsByTaskId(1))
                 .thenReturn(mockList);
 
-        mockMvc.perform(get("/comment/getallcommentsbytaskid/1"))
+        mockMvc.perform(get("/comment/getallcommentsbytaskid/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
     }
@@ -51,7 +62,8 @@ public class CommentControllerTest {
         Mockito.when(commentService.getAllCommentsByTaskId(1))
                 .thenThrow(new RuntimeException("Task not found"));
 
-        mockMvc.perform(get("/comment/getallcommentsbytaskid/1"))
+        mockMvc.perform(get("/comment/getallcommentsbytaskid/1")
+                        .session(session))
                 .andExpect(status().isExpectationFailed());
     }
 
@@ -69,7 +81,8 @@ public class CommentControllerTest {
 
         mockMvc.perform(get("/comment/getAllCommentsByUserOnTask")
                         .param("taskId", "1")
-                        .param("userId", "101"))
+                        .param("userId", "101")
+                        .session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
     }
@@ -82,7 +95,8 @@ public class CommentControllerTest {
 
         mockMvc.perform(get("/comment/getAllCommentsByUserOnTask")
                         .param("taskId", "1")
-                        .param("userId", "101"))
+                        .param("userId", "101")
+                        .session(session))
                 .andExpect(status().isExpectationFailed());
     }
 }
