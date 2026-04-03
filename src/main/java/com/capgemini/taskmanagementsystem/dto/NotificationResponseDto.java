@@ -15,4 +15,5 @@ public class NotificationResponseDto {
     private Integer notificationID;
     private String text;
     private LocalDateTime createdAt;
+    private String fullName;
 }
