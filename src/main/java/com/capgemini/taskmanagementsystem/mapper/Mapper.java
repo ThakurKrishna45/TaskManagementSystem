@@ -57,6 +57,7 @@ public class Mapper {
         dto.setCreatedAt(comment.getCreatedAt());
         dto.setTaskId(comment.getTask().getTaskID());
         dto.setUsername(comment.getUser().getUsername());
+        dto.setUserId(comment.getUser().getUserId());
 
         return dto;
     }
