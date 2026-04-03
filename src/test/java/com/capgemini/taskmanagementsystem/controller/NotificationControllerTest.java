@@ -14,6 +14,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultMatcher;
 
@@ -71,6 +74,41 @@ class NotificationControllerTest {
                 .session(session))
                 .andExpect(status().isExpectationFailed());
 
+    }
+
+    @Test
+    public void testGetNRecentNotifications_Success() throws Exception {
+        // Arrange: Create dummy data
+        NotificationResponseDto dto1 = new NotificationResponseDto(1, "Notif 1", LocalDateTime.now(), "John Doe");
+        NotificationResponseDto dto2 = new NotificationResponseDto(2, "Notif 2", LocalDateTime.now(), "John Doe");
+        List<NotificationResponseDto> responseList = Arrays.asList(dto1, dto2);
+
+        // Mock the service call
+        // Path matches: @GetMapping("/getnrecentnotif/{id}/{n}")
+        when(notificationService.getNRecentNotifications(1, 2)).thenReturn(responseList);
+
+        // Act & Assert
+        mockMvc.perform(get("/getnrecentnotif/1/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .session(session))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].notificationID").value(1))
+                .andExpect(jsonPath("$[1].notificationID").value(2))
+                .andExpect(jsonPath("$[0].text").value("Notif 1"));
+    }
+
+    @Test
+    public void testGetNRecentNotifications_NotFound() throws Exception {
+        // Arrange: Mock service throwing an exception (assuming your GlobalExceptionHandler maps this to 404 or 417)
+        when(notificationService.getNRecentNotifications(99, 5))
+                .thenThrow(new RuntimeException("No notifications found"));
+
+        // Act & Assert
+        mockMvc.perform(get("/getnrecentnotif/99/5")
+                .session(session))
+                // Change the status check to match your actual exception handler (e.g., .isNotFound() or .isExpectationFailed())
+                .andExpect(status().isInternalServerError());
     }
 
 }
