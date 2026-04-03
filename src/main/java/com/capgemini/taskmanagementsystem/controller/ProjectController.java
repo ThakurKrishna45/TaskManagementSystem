@@ -2,6 +2,7 @@ package com.capgemini.taskmanagementsystem.controller;
 
 import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
 import com.capgemini.taskmanagementsystem.dto.ProjectSummaryResponseDto;
+import com.capgemini.taskmanagementsystem.dto.ProjectSummaryWrapperDto;
 import com.capgemini.taskmanagementsystem.service.ILoginService;
 import com.capgemini.taskmanagementsystem.service.IProjectService;
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("project/")
+@RequestMapping("/project")
 public class ProjectController {
 
     @Autowired
@@ -39,8 +40,8 @@ public class ProjectController {
     }
 
     @GetMapping("summary/{projectId}")
-    public ResponseEntity<List<ProjectSummaryResponseDto>> getSummary(@PathVariable Integer projectId){
-        return new ResponseEntity<List<ProjectSummaryResponseDto>>(projectService.getSummary(projectId),HttpStatus.OK);
+    public ResponseEntity<ProjectSummaryWrapperDto> getSummary(@PathVariable Integer projectId){
+        return new ResponseEntity<ProjectSummaryWrapperDto>(projectService.getSummary(projectId),HttpStatus.OK);
     }
 
 }
