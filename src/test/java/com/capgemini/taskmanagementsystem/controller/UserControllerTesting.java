@@ -5,9 +5,11 @@ import com.capgemini.taskmanagementsystem.exception.ResourceNotFoundException;
 import com.capgemini.taskmanagementsystem.mapper.Mapper;
 import com.capgemini.taskmanagementsystem.repository.IUserRepository;
 import com.capgemini.taskmanagementsystem.service.IUserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,11 +30,20 @@ public class UserControllerTesting {
     @MockitoBean
     IUserRepository userRepository;
 
+    private MockHttpSession session;
+
+    @BeforeEach
+    void setUp() {
+        session = new MockHttpSession();
+        session.setAttribute("found", "test");
+    }
+
     @Test
     void getByIdPositiveTest() throws Exception{
         User user = new User("vinay123","vinay123","vinay@gmail.com","Vinay Kumar");
         when(userService.getUserById(101)).thenReturn(Mapper.userToDto(user));
-        mockMvc.perform(get("/user/findById/101"))
+        mockMvc.perform(get("/user/findById/101")
+                .session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("vinay123"));
     }
@@ -40,7 +51,8 @@ public class UserControllerTesting {
     @Test
     void getByIdNegativeTest() throws Exception{
         when(userService.getUserById(101)).thenThrow(new ResourceNotFoundException("User Not Found"));
-        mockMvc.perform(get("/user/findById/101"))
+        mockMvc.perform(get("/user/findById/101")
+                .session(session))
                 .andExpect(status().isNotFound());
     }
 

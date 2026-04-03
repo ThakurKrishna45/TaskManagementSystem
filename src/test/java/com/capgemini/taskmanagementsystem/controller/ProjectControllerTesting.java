@@ -12,13 +12,13 @@ import com.capgemini.taskmanagementsystem.repository.ITaskRepository;
 import com.capgemini.taskmanagementsystem.repository.IUserRepository;
 import com.capgemini.taskmanagementsystem.service.ILoginService;
 import com.capgemini.taskmanagementsystem.service.IProjectService;
-import jakarta.servlet.http.HttpSession;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,8 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ProjectController.class)
 public class ProjectControllerTesting {
-    @Mock
-    HttpSession session;
 
     @Autowired
     MockMvc mockMvc;
@@ -57,6 +55,14 @@ public class ProjectControllerTesting {
     @MockitoBean
     ITaskRepository taskRepository;
 
+    private MockHttpSession session;
+
+    @BeforeEach
+    void setUp() {
+        session = new MockHttpSession();
+        session.setAttribute("found", "abc");
+    }
+
     @Test
     void getProjectByUserIdPositiveTest() throws Exception{
         User user = new User("vinay123","vinay123","vinay@gmail.com","Vinay Kumar");
@@ -71,12 +77,12 @@ public class ProjectControllerTesting {
             projectsDto.add(Mapper.projectToDto(p));
         }
 
-        when(session.getAttribute("found")).thenReturn("abc");
         when(loginService.isLogin(session)).thenReturn(true);
         when(userRepository.existsById(101)).thenReturn(true);
         when(projectService.getAllProjectByUserId(101)).thenReturn(projectsDto);
 
-        mockMvc.perform(get("/project/allProjectByUserId/101"))
+        mockMvc.perform(get("/project/allProjectByUserId/101")
+                .session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].projectName").value("Task Management 1"));
     }
@@ -85,12 +91,12 @@ public class ProjectControllerTesting {
     @Test
     void getProjectByuserIdNegativeTest() throws Exception{
 
-        when(session.getAttribute("found")).thenReturn("abc");
         when(loginService.isLogin(session)).thenReturn(true);
         when(userRepository.existsById(101)).thenReturn(true);
         when(projectService.getAllProjectByUserId(101)).thenThrow(new ResourceNotFoundException("No Project Found for User"));
 
-        mockMvc.perform(get("/project/allProjectByUserId/101"))
+        mockMvc.perform(get("/project/allProjectByUserId/101")
+                .session(session))
                 .andExpect(status().isNotFound());
     }
 
@@ -109,22 +115,22 @@ public class ProjectControllerTesting {
             projectsDto.add(Mapper.projectToDto(p));
         }
 
-        when(session.getAttribute("found")).thenReturn("abc");
         when(loginService.isLogin(session)).thenReturn(true);
         when(projectService.getProjectByTimeDuration(LocalDate.of(2026,1,1),LocalDate.of(2026,2,2))).thenReturn(projectsDto);
         when(projectRepository.findProjectByTimeDuration(LocalDate.of(2026,1,1),LocalDate.of(2026,2,2))).thenReturn(projects);
-        mockMvc.perform(get("/project/allProjectBetweenDuration/2026-01-01/2026-02-02"))
+        mockMvc.perform(get("/project/allProjectBetweenDuration/2026-01-01/2026-02-02")
+                .session(session))
                 .andExpect(status().isOk());
     }
 
     @Test
     void getProjectbetweenDurationNegativeTest() throws Exception{
 
-        when(session.getAttribute("found")).thenReturn("abc");
         when(loginService.isLogin(session)).thenReturn(true);
         when(projectService.getProjectByTimeDuration(LocalDate.of(2026,1,1),LocalDate.of(2026,2,2))).thenThrow(new ResourceNotFoundException("No Projects Between this time line!!"));
         when(projectRepository.findProjectByTimeDuration(LocalDate.of(2026,1,1),LocalDate.of(2026,2,2))).thenThrow(new ResourceNotFoundException("No Projects Between this time line!!"));
-        mockMvc.perform(get("/project/allProjectBetweenDuration/2026-01-01/2026-02-02"))
+        mockMvc.perform(get("/project/allProjectBetweenDuration/2026-01-01/2026-02-02")
+                .session(session))
                 .andExpect(status().isNotFound());
     }
 
@@ -138,19 +144,22 @@ public class ProjectControllerTesting {
         summaryList.add(new ProjectSummaryResponseDto(task1.getUser().getUsername(),task1.getUser().getFullName(),task1.getTaskName(),task1.getStatus()));
         summaryList.add(new ProjectSummaryResponseDto(task2.getUser().getUsername(),task2.getUser().getFullName(),task2.getTaskName(),task2.getStatus()));
 
+        when(loginService.isLogin(session)).thenReturn(true);
         when(taskRepository.findByProjectProjectId(1)).thenReturn(List.of(task1,task2));
         when(projectService.getSummary(1)).thenReturn(summaryList);
-        mockMvc.perform(get("/project/summary/1"))
+        mockMvc.perform(get("/project/summary/1")
+                .session(session))
                 .andExpect(status().isOk());
     }
 
 
     @Test
     void getSummaryNegativeTest() throws Exception{
+        when(loginService.isLogin(session)).thenReturn(true);
         when(taskRepository.findByProjectProjectId(1)).thenReturn(null);
         when(projectService.getSummary(1)).thenThrow(new ResourceNotFoundException("No Task Found"));
-        mockMvc.perform(get("/project/summary/1"))
+        mockMvc.perform(get("/project/summary/1")
+                .session(session))
                 .andExpect(status().isNotFound());
     }
 }
-
