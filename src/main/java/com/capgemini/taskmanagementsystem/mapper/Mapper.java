@@ -39,6 +39,7 @@ public class Mapper {
         notificationResponseDto.setText(notification.getText());
         notificationResponseDto.setCreatedAt(notification.getCreatedAt());
         notificationResponseDto.setNotificationID(notification.getNotificationID());
+        notificationResponseDto.setFullName(notification.getUser().getFullName());
         return notificationResponseDto;
     }
 
