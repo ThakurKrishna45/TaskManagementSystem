@@ -2,6 +2,7 @@ package com.capgemini.taskmanagementsystem.controller;
 
 import com.capgemini.taskmanagementsystem.dto.ProjectResponseDto;
 import com.capgemini.taskmanagementsystem.dto.ProjectSummaryResponseDto;
+import com.capgemini.taskmanagementsystem.dto.ProjectSummaryWrapperDto;
 import com.capgemini.taskmanagementsystem.entity.Project;
 import com.capgemini.taskmanagementsystem.entity.Task;
 import com.capgemini.taskmanagementsystem.entity.User;
@@ -135,31 +136,42 @@ public class ProjectControllerTesting {
     }
 
     @Test
-    void getSummaryPositiveTest() throws Exception{
-        User user = new User("vinay123","vinay123","vinay@gmail.com","Vinay Kumar");
-        Project project = new Project("Task Management","tasks", LocalDate.of(2000,1,1),LocalDate.of(2000,2,2),user);
-        Task task1 = new Task("task1","task1",LocalDate.of(2000,1,1),"HIGH","In Progress",project,user);
-        Task task2 = new Task("task1","task1",LocalDate.of(2000,1,1),"HIGH","In Progress",project,user);
-        List<ProjectSummaryResponseDto> summaryList = new ArrayList<>();
-        summaryList.add(new ProjectSummaryResponseDto(task1.getUser().getUsername(),task1.getUser().getFullName(),task1.getTaskName(),task1.getStatus()));
-        summaryList.add(new ProjectSummaryResponseDto(task2.getUser().getUsername(),task2.getUser().getFullName(),task2.getTaskName(),task2.getStatus()));
+    void getProjectSummaryPositiveTest() throws Exception {
 
-        when(loginService.isLogin(session)).thenReturn(true);
-        when(taskRepository.findByProjectProjectId(1)).thenReturn(List.of(task1,task2));
-        when(projectService.getSummary(1)).thenReturn(summaryList);
+        ProjectSummaryResponseDto dto1 =
+                new ProjectSummaryResponseDto("john_doe", LocalDate.of(2022, 2, 1), "Task One", "In Progress");
+
+        ProjectSummaryResponseDto dto2 =
+                new ProjectSummaryResponseDto("jane_smith", LocalDate.of(2023, 4, 1), "Task Two", "Pending");
+
+        List<ProjectSummaryResponseDto> summaries = List.of(dto1, dto2);
+
+        ProjectSummaryWrapperDto wrapper = new ProjectSummaryWrapperDto(
+                "Task Management System",
+                LocalDate.of(2026, 4, 1),
+                LocalDate.of(2026, 4, 30),
+                summaries
+        );
+
+        when(projectService.getSummary(1)).thenReturn(wrapper);
+
         mockMvc.perform(get("/project/summary/1")
-                .session(session))
-                .andExpect(status().isOk());
+                        .session(session))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.projectName").value("Task Management System"))
+                .andExpect(jsonPath("$.summaries[1].task").value("Task Two"))
+                .andExpect(jsonPath("$.summaries[0].userName").value("john_doe"));
     }
 
 
     @Test
-    void getSummaryNegativeTest() throws Exception{
-        when(loginService.isLogin(session)).thenReturn(true);
-        when(taskRepository.findByProjectProjectId(1)).thenReturn(null);
-        when(projectService.getSummary(1)).thenThrow(new ResourceNotFoundException("No Task Found"));
+    void getSummaryNegativeTest() throws Exception {
+
+        when(projectService.getSummary(1))
+                .thenThrow(new ResourceNotFoundException("No Task Found"));
+
         mockMvc.perform(get("/project/summary/1")
-                .session(session))
+                        .session(session))
                 .andExpect(status().isNotFound());
     }
 }
