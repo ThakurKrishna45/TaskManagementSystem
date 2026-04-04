@@ -88,7 +88,7 @@ class NotificationControllerTest {
         when(notificationService.getNRecentNotifications(1, 2)).thenReturn(responseList);
 
         // Act & Assert
-        mockMvc.perform(get("/getnrecentnotif/1/2")
+        mockMvc.perform(get("/notification/getnrecentnotif/1/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .session(session))
                 .andExpect(status().isOk())
@@ -105,10 +105,10 @@ class NotificationControllerTest {
                 .thenThrow(new RuntimeException("No notifications found"));
 
         // Act & Assert
-        mockMvc.perform(get("/getnrecentnotif/99/5")
+        mockMvc.perform(get("/notification/getnrecentnotif/99/5")
                 .session(session))
                 // Change the status check to match your actual exception handler (e.g., .isNotFound() or .isExpectationFailed())
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isExpectationFailed());
     }
 
 }
